@@ -1,3 +1,5 @@
+const API_BASE_URL = 'https://koinx-90cx.onrender.com';
+
 document.getElementById('reconcile-btn').addEventListener('click', async () => {
     const userFile = document.getElementById('user_file').files[0];
     const exchangeFile = document.getElementById('exchange_file').files[0];
@@ -20,7 +22,7 @@ document.getElementById('reconcile-btn').addEventListener('click', async () => {
     formData.append('exchange_file', exchangeFile);
 
     try {
-        const response = await fetch('/api/reconcile', {
+        const response = await fetch(`${API_BASE_URL}/api/reconcile`, {
             method: 'POST',
             body: formData,
         });
@@ -44,12 +46,12 @@ document.getElementById('reconcile-btn').addEventListener('click', async () => {
 async function fetchAndDisplayReport(runId) {
     try {
         // Fetch summary
-        const summaryRes = await fetch(`/api/report/${runId}/summary`);
+        const summaryRes = await fetch(`${API_BASE_URL}/api/report/${runId}/summary`);
         const summaryData = await summaryRes.json();
         displaySummary(summaryData);
 
         // Fetch full report
-        const reportRes = await fetch(`/api/report/${runId}`);
+        const reportRes = await fetch(`${API_BASE_URL}/api/report/${runId}`);
         const reportData = await reportRes.json();
         displayReport(reportData);
 
