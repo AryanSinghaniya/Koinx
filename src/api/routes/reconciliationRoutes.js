@@ -9,9 +9,11 @@ const {
     getUnmatched,
 } = require('../controllers/reconciliationController');
 
+const uploadsDir = path.join(__dirname, '..', '..', '..', 'uploads');
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/');
+        cb(null, uploadsDir);
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + path.extname(file.originalname)); //Appending extension
