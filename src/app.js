@@ -1,11 +1,19 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const fs = require('fs');
+const path = require('path');
 const config = require('./config/config');
 const logger = require('./utils/logger');
 const reconciliationRoutes = require('./api/routes/reconciliationRoutes');
 
 const app = express();
+
+// Ensure uploads folder exists (Render filesystem starts clean)
+const uploadsDir = path.join(__dirname, '..', 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+}
 
 // Middleware
 app.use(cors({
