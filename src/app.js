@@ -9,10 +9,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: [
-        'https://koinx-ten-taupe.vercel.app',
-        'http://localhost:5000'
-    ]
+    origin: true
 }));
 app.use(express.json());
 app.use(express.static('public'));

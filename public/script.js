@@ -26,14 +26,19 @@ document.getElementById('reconcile-btn').addEventListener('click', async () => {
             method: 'POST',
             body: formData,
         });
-        const data = await response.json();
+        const contentType = response.headers.get('content-type') || '';
+        const isJson = contentType.includes('application/json');
+        const data = isJson ? await response.json() : null;
 
         if (response.ok) {
             const runId = data.runId;
             reconcileBtn.textContent = 'Fetching Report...';
             await fetchAndDisplayReport(runId);
         } else {
-            throw new Error(data.error || data.message || 'Failed to start reconciliation');
+            const errorText = isJson
+                ? (data.error || data.message)
+                : await response.text();
+            throw new Error(errorText || 'Failed to start reconciliation');
         }
     } catch (error) {
         summaryDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
