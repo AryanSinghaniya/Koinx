@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const config = require('./config/config');
 const logger = require('./utils/logger');
 const reconciliationRoutes = require('./api/routes/reconciliationRoutes');
@@ -7,6 +8,12 @@ const reconciliationRoutes = require('./api/routes/reconciliationRoutes');
 const app = express();
 
 // Middleware
+app.use(cors({
+    origin: [
+        'https://koinx-ten-taupe.vercel.app',
+        'http://localhost:5000'
+    ]
+}));
 app.use(express.json());
 app.use(express.static('public'));
 
